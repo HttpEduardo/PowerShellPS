@@ -1,38 +1,38 @@
 # PSClass
 
-This is a PowerShell module to help determine class dependencies, and also to determine the order that you need to import classes into your module.
+Este é um módulo do PowerShell para ajudar a determinar as dependências de classe e também para determinar a ordem que você precisa para importar as classes para o seu módulo.
 
-## Install
+## Instalar
 
-You can install PSClass from the PowerShell Gallery
+Você pode instalar o PSClass da Galeria do PowerShell
 
 ```powershell
-Install-Module PSClass
+Módulo de instalação PSClass
 ```
 
-## Usage
+## Uso
 
-All classes/enums need to be within a `/Classes` directory, and references to custom classes referenced as `[ClassA]`. Class names should also match the name of the PowerShell file - so a `ClassA` *must* be within a `ClassA.ps1` file.
+Todas as classes/enums precisam estar dentro de um diretório `/Classes` e referências a classes personalizadas referenciadas como `[ClassA]`. Os nomes das classes também devem corresponder ao nome do arquivo PowerShell - portanto, um `ClassA` *deve* estar dentro de um arquivo `ClassA.ps1`.
 
-For example, if you have some class `ClassA` and some other class `ClassB`, the PSClass will see `[ClassB]::Method()` and mark that it should be imported before `ClassA` automatically:
+Por exemplo, se você tiver alguma classe `ClassA` e alguma outra classe `ClassB`, o PSClass verá `[ClassB]::Method()` e marcará que deve ser importado antes de `ClassA` automaticamente:
 
 ```powershell
-class ClassA
+classe classe A
 {
-    static [void] SomeMethod()
-    {
-        [ClassB]::Method()
-    }
+     static [void] SomeMethod()
+     {
+         [ClasseB]::Método()
+     }
 }
 ```
 
-Here, PSClass will know that `ClassB` needs to be imported before `ClassA`.
+Aqui, PSClass saberá que `ClassB` precisa ser importado antes de `ClassA`.
 
-PSClass will see any `[...]` lines and use them to determine the order that classes/enums are required to be imported - as well as detecting cyclic dependencies.
+PSClass verá quaisquer linhas `[...]` e as usará para determinar a ordem em que as classes/enums devem ser importadas - assim como detectar dependências cíclicas.
 
-> Classes/enums can be within sub-directories within the `/Classes` directory.
+> Classes/enums podem estar dentro de subdiretórios dentro do diretório `/Classes`.
 
-## Functions
+## Funções
 
 ### Get-PSClassOrder
 
@@ -40,9 +40,9 @@ PSClass will see any `[...]` lines and use them to determine the order that clas
 Get-PSClassOrder [-Path <string>]
 ```
 
-When run, this function will look for the `/Classes` folder at the `-Path` specified (default is the current path).
+Quando executada, esta função irá procurar a pasta `/Classes` no `-Path` especificado (o padrão é o caminho atual).
 
-It will then return an array of the class/enum paths in the precise order that they should be imported:
+Em seguida, ele retornará uma matriz dos caminhos de classe/enum na ordem precisa em que devem ser importados:
 
 ```powershell
 Get-PSClassOrder | ForEach-Object { . $_ }
@@ -54,7 +54,7 @@ Get-PSClassOrder | ForEach-Object { . $_ }
 Show-PSClassgraph [-Path <string>] [-Namespace <string>]
 ```
 
-Will return the full dependency graph of the classes/enums, or just the dependencies of the namespace specified. The namespace is the path to a class (with no extension), and the slashes are replaced for dots - such as `Tools.Helpers` for a class called `Helpers` at `/Classes/Tools/Helpers.ps1`.
+Retornará o gráfico de dependência completo das classes/enums ou apenas as dependências do namespace especificado. O namespace é o caminho para uma classe (sem extensão), e as barras são substituídas por pontos - como `Tools.Helpers` para uma classe chamada `Helpers` em `/Classes/Tools/Helpers.ps1`.
 
 ### Test-PSClassCyclic
 
@@ -62,5 +62,5 @@ Will return the full dependency graph of the classes/enums, or just the dependen
 Test-PSClassCyclic [-Path <string>] [-Namespace <string>]
 ```
 
-Will test for cyclic dependencies on a classes/enums. The namespace is the path to a class (with no extension), and the slashes are replaced for dots - such as `Tools.Helpers` for a class called `Helpers` at `/Classes/Tools/Helpers.ps1`.
+Irá testar dependências cíclicas em classes/enums. O namespace é o caminho para uma classe (sem extensão), e as barras são substituídas por pontos - como `Tools.Helpers` para uma classe chamada `Helpers` em `/Classes/Tools/Helpers.ps1`.
 # PowerShellPS
